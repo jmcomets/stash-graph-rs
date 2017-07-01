@@ -13,7 +13,10 @@ pub struct Node(usize);
 #[derive(Copy, Clone, Hash, Ord, PartialOrd, Eq, PartialEq, Debug)]
 pub struct Edge(usize);
 
-type NodeData<N> = (HashSet<Edge>, N);
+type EdgeList = HashSet<Edge>;
+type EdgeListIter<'a> = HashSetIter<'a, Edge>;
+
+type NodeData<N> = (EdgeList, N);
 
 type EdgeData<E> = ((Node, Node), E);
 
@@ -48,7 +51,7 @@ impl<N, E> Graph<N, E> {
     }
 
     pub fn add_node(&mut self, node_weight: N) -> Node {
-        Node(self.nodes.put((HashSet::new(), node_weight)))
+        Node(self.nodes.put((EdgeList::new(), node_weight)))
     }
 
     pub fn remove_node(&mut self, node: Node) {
@@ -219,7 +222,7 @@ impl<'a, E> Iterator for EdgeIter<'a, E> {
 struct Neighbors<'a, E: 'a> {
     direction: Direction,
     edges: &'a Stash<EdgeData<E>>,
-    iter: HashSetIter<'a, Edge>,
+    iter: EdgeListIter<'a>,
     node: Node,
 }
 
