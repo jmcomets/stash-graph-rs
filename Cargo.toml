@@ -1,0 +1,6 @@
+[package]
+authors = ["Jean-Marie Comets <jean.marie.comets@gmail.com>"]
+name = "stash-graph"
+version = "0.1.0"
+[dependencies]
+stash = "*"
