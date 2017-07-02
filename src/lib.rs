@@ -20,6 +20,7 @@ type NodeData<N> = (EdgeList, N);
 
 type EdgeData<E> = ((Node, Node), E);
 
+#[derive(Clone)]
 pub struct Graph<N, E> {
     nodes: Stash<NodeData<N>>,
     edges: Stash<EdgeData<E>>,
